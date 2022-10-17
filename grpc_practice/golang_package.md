@@ -19,3 +19,11 @@ API center
 
 ```
 6. CI\CD构建、docker hub私服、helm私服构建
+
+### 具体实施
+
+1. Gitlab搭建
+2. k8s搭建
+3. Gitlab-ci编写
+
+
