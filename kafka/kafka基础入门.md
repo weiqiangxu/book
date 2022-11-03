@@ -90,6 +90,23 @@ Connector API（连接器API）
 
 > 消费者数量大于分区数时候，多余的消费者会处于闲置的状态
 
+### 术语
+
+```
+Record
+Topic
+Producer
+Consumer
+Broker
+Partition
+Leader/Follower  分区分本
+Offset 偏移量
+Consumer group  消费者组
+Coodinator 协调者
+Controller 控制器
+```
+
+
 ### 参考博客
 
 [超详细“零”基础kafka入门篇](https://www.cnblogs.com/along21/p/10278100.html)
