@@ -86,7 +86,7 @@ Connector API（连接器API）
 最终读取 append log 文件的程序，可以读取多个 append log 文件 (topic是微信日志，这个日志存在很多个地方)
 ```
 
-# 关键点：持有一个group id消费1个分区的消息，只能被1个消费者消费，如果有2个消费者持有同一个 group id 消费同一个分区的数据，那么其中只有 1个 可以消费到
+##### 关键点：持有一个group id消费1个分区的消息，只能被1个消费者消费，如果有2个消费者持有同一个 group id 消费同一个分区的数据，那么其中只有 1个 可以消费到
 
 > 消费者数量大于分区数时候，多余的消费者会处于闲置的状态
 
@@ -113,13 +113,15 @@ Controller 控制器，本质上是1个broker，负责协调和管理集群（le
 
 [超详细“零”基础kafka入门篇](https://www.cnblogs.com/along21/p/10278100.html)
 
-### kafka通信过程原理
+### kafka通信过程原理 - 生产者
 
 1. kafka broker启动，向 zookeeper 注册自己ID，并且向zookeeper订阅所有的broker
 2. 生产者启动，指定bootstrap.servers，指定的broker地址，建立TCP连接
 3. 生产者发送消息给broker获取所有的broker信息
 4. 生产和所有的broker建立TCP连接
 5. 开始生产啦
+
+### kafka通信过程原理 - 消费者
 
 1. 消费者和一个broker连接
 2. 协调者获取所有分区信息
@@ -293,7 +295,7 @@ LEO（Log End Offset）：下一条待写入消息的位移
 
 ### Kafka为什么快
 
-1. 顺序 IO。
+1. 顺序 IO
 
 2. Page Cache 和零拷贝
 
