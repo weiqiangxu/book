@@ -7,7 +7,8 @@
 5. Rebalance重平衡
 6. 分区分配策略
 7. 如何保证消息可靠性
-
+8. AR（Assigned Replicas）副本的集合
+9. 和Leader副本保持同步的副本集合称为ISR（InSyncReplicas）(所有follower)
 
 
  ### 参考
