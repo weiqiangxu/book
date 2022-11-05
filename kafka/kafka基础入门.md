@@ -312,3 +312,56 @@ LEO（Log End Offset）：下一条待写入消息的位移
 
 消费消息一次拉取一批次的消息进行消费
 ```
+
+### 副本
+
+```
+AR(Assigned Replicas)(所有副本) = 
+ISR(已经同步的)(In Sync Replicas) + OSR(同步滞后)(Out-of-Sync Replied)
+```
+
+
+[一文读懂kafka](https://baijiahao.baidu.com/s?id=1719501564805569513)
+
+### broker 恢复机制
+
+```
+LEO：（Log End Offset）每个副本的最后一个offset
+
+HW：（High Watermark）高水位，指的是消费者能见到的最大的 offset
+```
+### 先消费后提交offset会有可能出现重复消费的异常，解决异常时保证消费消息的逻辑的幂等性
+
+
+### 先提交后消费会出现消息丢失的可能，因为offset已经更新了consumer却崩溃了
+
+
+### 消息堆积出现的原因是消费者跟不上生产者的速度，解决方案时增加partition增加消费者
+
+
+### kafka如何在高可用的架构下（多副本）保证数据的一致性的
+
+```
+高可用是通过数据冗余的方式实现 （在leader挂了的时候follower推举为新的leader）
+
+数据冗余需要保证数据一致性，就要从副本同步机制讲起
+```
+
+### kafka副本同步机制
+
+```
+LEO和HW
+```
+
+
+### 分区策略 - message究竟要存到topic下面的哪个分区的策略
+
+```
+1. 手动指定partition
+
+2. 随机轮询
+
+3. 按key存储 (key的hash和分区数取余数)
+
+4. 顺序轮询（round-robin）（第一次调用随机生成整数，后续每次调用自增，用这个数于分区数取余数）
+```
