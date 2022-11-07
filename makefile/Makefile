@@ -9,3 +9,5 @@ test_val:
 	@echo $(foo)
 awk_test:
 	@echo "awk_test"
+test_phony:
+	@echo "test_phony"

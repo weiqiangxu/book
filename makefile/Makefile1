@@ -1,0 +1,4 @@
+.PHONY:clean
+
+clean:
+	rm -f /Users/xuweiqiang/Documents/code/book/makefile/test_phony1.txt
