@@ -7,7 +7,7 @@
 │   ├── admin_service｜实现后台管理系统CRUD当前微服务数据需要用到的 RPC 接口
 │   │   ├── dto | 数据传输对象实体
 │   │   └── grpc | RPC接口实现
-│   ├── event | 内置事件 ｜ 比如定时器 ｜ 统一实现一个抽象 interface{ start stop }
+│   ├── event | 内置事件 ｜ 比如定时器 ｜ 统一实现一个抽象 interface{ start stop } | 这里注意下就是这个包是不允许有init函数的，禁止自身调用自身，它的调用必须显式地写在 applicition.Init或者编译入口main函数之中
 │   └── front_service
 │       ├── dtos | 数据传输对象对外的restful接口用到的对象
 │       └── http | controller层 ｜ 如果涉及2个领域比如用户中心领域和商户领域 ｜ 在这里将2个领域组装数据 | 这里获取到的各个domain object是一个复杂的对象转
