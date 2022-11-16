@@ -36,14 +36,14 @@
 ├── global ｜ 全局的工具类 - 偏业务 ｜ 可以被domain\event依赖的
 │   ├── cache | 缓存key管理
 │   ├── enum ｜ 一些通用的枚举值
-│   └── router ｜ 路由
+│   └── router ｜ 路由 ｜ restful 
 ├── cmd | 运行入口 main.go | 运行逻辑大致是 配置加载 > application.Init > rpc.server.register > prometheus/event > run
 ├── interfaces
 └── tools ｜ 工具类 - 剥离业务 - 一小部分特有的 ｜ 大部分的util工具被封装到团队独立的git仓库 ｜ go.mod引用爱用哪个版本用哪个
     └── utils
 ```
 
-### 二、私有化仓库分模块
+### 二、其他的私有化Git仓库
 
 1. util 
 ```
@@ -66,7 +66,17 @@
 rpc接口主要用于其他微服务开发者（rpc的调用方和实现方协作）（当然，禁止出现interface，只有基本数据类型组成的结构体）
 
 这个还是很好用的，定义好抽象以后可以让调用方和实现方同时进行开发
+
+关于proto文件的写法规范、文件放哪里合适啥的
 ```
+
+[真是头疼，Proto 代码到底放哪里？](https://mp.weixin.qq.com/s/cBXZjg_R8MLFDJyFtpjVVQ)
+
+[轻量级微服务框架 go-kratos/kratos](https://github.com/go-kratos/kratos/blob/main/README_zh.md)
+
+[google API设计指南中文版](https://www.bookstack.cn/read/API-design-guide/API-design-guide-README.md)
+
+[protobuf规范](https://go-kratos.dev/docs/guide/api-protobuf/)
 
 4. logger
 ```
@@ -119,7 +129,7 @@ rpc接口主要用于其他微服务开发者（rpc的调用方和实现方协�
 至于Redis缓存、他们想隔离，但是有时候分布式锁依赖，目前是没隔离
 ```
 
-### 四、git flow 和 CICD
+### 四、git flow 和 CICD (k8s一整套上手也挺困难的)
 ```
 git flow 下会产生 dev \ feature \ main \release \ hotfix \ tag
 
