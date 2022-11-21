@@ -88,6 +88,14 @@ Connector API（连接器API）
 
 ##### 关键点：持有一个group id消费1个分区的消息，只能被1个消费者消费，如果有2个消费者持有同一个 group id 消费同一个分区的数据，那么其中只有 1个 可以消费到
 
+##### 关键点：持有一个group id消费1个分区的消息，只能被1个消费者消费，如果有2个消费者持有同一个 group id 消费同一个分区的数据，那么其中只有 1个 可以消费到
+
+```
+底层是如何实现的呢
+
+consumer订阅topic以后，底层的逻辑是怎么样的呢
+```
+
 > 消费者数量大于分区数时候，多余的消费者会处于闲置的状态
 
 ### 术语
@@ -338,6 +346,10 @@ HW：（High Watermark）高水位，指的是消费者能见到的最大的 off
 
 ### 消息堆积出现的原因是消费者跟不上生产者的速度，解决方案时增加partition增加消费者
 
+```
+还有1种消息堆积的是因为，手动提交的情况下，consumer.pull到了message但是一直不消费也不提交直接跳过去了
+```
+
 
 ### kafka如何在高可用的架构下（多副本）保证数据的一致性的
 
@@ -379,8 +391,70 @@ LEO和HW
 
 ### kafka的消费者只有1个，但是分区有5个，那么当这个消费者持有消费者组A消费了这个topic，这5个分区的消费位点都会往前挪动吗
 
+```
+首先，分区不是副本，多个分区他们的内容不是一样的
+```
+
 ### 没有阿里云，怎么命令行界面上或者图形上看当前的topic的订阅者有哪些组，每个消费者组的消费位点是什么，堆积量多少
 
 ### 有没有做堆积量告警，怎么做的
 
 ### 消息查询按时间点、按位点、按分区如何使用查询
+
+### 如何查看某一个消费者组订阅的topic有哪些
+
+### 分区数量的数量设置依据什么合适
+
+### 分区的写入策略
+
+```
+轮询
+随机
+按键保存
+自定义
+```
+
+[Kafka增加分区导致业务数据异常](https://zhuanlan.zhihu.com/p/392921569)
+
+### kafka同一个消费者会消费了同一个topic多个分区的同一个消费偏移吗
+
+```
+首先，分区不是副本，多个分区他们的内容不是一样的
+```
+
+### 增加分区后会有什么情况发生
+
+```
+比如将分区12 扩展为1234会有什么事情
+```
+
+### 一个topic_1有4个分区，只有group_a订阅topic_1，对应的 group_a 的消费者consumer只有一个A，那么这个A可以订阅所有的分区吗
+
+```
+当然是可以啊，一个消费者持有一个group_id一定是可以订阅到所有分区的
+
+不能订阅到的情况只能是，多个消费者持有同一个 group_id 
+```
+
+[Kafka查看topic、consumer group状态命令](http://wjhsh.net/timor19-p-12742362.html)
+
+[kafka对topic的CRUD](https://blog.csdn.net/javahelpyou/article/details/125887294)
+
+### ACK
+
+```
+消费者位置(consumer position) 
+
+每个consumer group保存自己的位移信息, checkpoint机制定期持久化
+
+老版本的位移是提交到zookeeper中的，目录结构是：/consumers/<group.id>/offsets/<topic>/<partitionId>
+```
+
+[Kafka 源码解析之 Consumer 如何加入一个 Group](https://blog.csdn.net/weixin_43956062/article/details/106784984)
+
+
+
+### 我的 client_A 目前占有1个topic的2个分区(p1,p2)，pull了500条数据(offset = 10~510)正在消费，消费到50%的时候260，重新加入了一个 client_B订阅该topic，那么这个时候会把client_A正在消费的另一个分区给p2 rebalance给 client_B 吗，如果会的话，会把 10~510的数据给 client_B 消费吗
+
+
+### rebalance的触发情形有哪些，rebalance的底层原理是什么
