@@ -159,3 +159,55 @@ i am message   ### 这个是和 errors.New 唯一的区别
 ### 1. 使用包github.com/errors替换pkg/errors
 ### 2. 在透传error的时候用errors.WithMessage不要用Wrap也不要用Errorf
 ### 3. errors.New就有堆栈了不用New出来后WithStack
+
+
+### 错误的判断error类型方式
+```
+package main
+
+import (
+	"fmt"
+	"github.com/pkg/errors"
+)
+
+var ErrNil = errors.New("redigo: nil returned")
+
+// 错误的判定error类型方式
+
+func main() {
+	fmt.Println(errors.Is(ErrNil, a())) // 输出false因为b返回的error被包装过了
+}
+
+func a() error {
+	return errors.WithMessage(b(), "i am message")
+}
+
+func b() error {
+	return ErrNil
+}
+```
+
+### 正确应该使用 errors.Cause(err).(type)
+
+```
+import (
+	"fmt"
+	"github.com/pkg/errors"
+)
+
+var ErrNil = errors.New("redigo: nil returned")
+
+// 正确的判定方式
+func main() {
+	err := errors.Cause(a())
+	fmt.Print(errors.Is(err, ErrNil))
+}
+
+func a() error {
+	return errors.WithMessage(b(), "i am message")
+}
+
+func b() error {
+	return ErrNil
+}
+```
