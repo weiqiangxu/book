@@ -375,7 +375,7 @@ kubectl  delete  -f  svc-nginx.yaml
 
 6. 获取pod IP
 ```
-kubectl get po -o wide -n horn
+kubectl get po -o wide -n github
 ```
 
 
