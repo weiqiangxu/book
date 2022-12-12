@@ -25,3 +25,5 @@ docker run -d -p 5775:5775/udp -p 16686:16686 jaegertracing/all-in-one:latest
 [https://www.cnblogs.com/whuanle/p/14598049.html](https://www.cnblogs.com/whuanle/p/14598049.html)
 
 [go-gin-api 路由中间件 - Jaeger 链路追踪](https://www.cnblogs.com/xinliangcoder/p/11604880.html)
+
+[github.com/xinliangnote/go-jaeger-demo](https://github.com/xinliangnote/go-jaeger-demo)
