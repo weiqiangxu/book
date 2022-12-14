@@ -7,3 +7,7 @@
 [Jaeger 链路追踪](https://mp.weixin.qq.com/s/28UBEsLOAHDv530ePilKQA)
 
 [路由中间件 - Jaeger 链路追踪](https://mp.weixin.qq.com/s/Ea28475_UTNaM9RNfgPqJA)
+
+[grpc实践](https://www.jishuchi.com/read/gin-practice/3886)
+
+[GC角度看内存损耗](https://www.jishuchi.com/read/gin-practice/3831)

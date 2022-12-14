@@ -14,6 +14,16 @@ docker run -d -p 5775:5775/udp -p 16686:16686 jaegertracing/all-in-one:latest
 [http://127.0.0.1:16686/search](http://127.0.0.1:16686/search)
 
 
+### 如何注入trace到Gin
+
+```
+1. 在路由中间件StartSpan并且gin.Context.Set将parentSpan.Context往下传递
+2. GRPC的client的Dial的时候注入unaryTraceInterceptor（带上全局的tracer）拦截请求的时候start child span
+tips: 关于UnaryClientInterceptor的invoke，相当于middlware.next
+UnaryInvoker is called by UnaryClientInterceptor to complete RPCs
+命令模式关键字
+```
+
 ### 相关地址
 
 [github.com/yurishkuro/opentracing-tutorial/](https://github.com/yurishkuro/opentracing-tutorial/)
