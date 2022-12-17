@@ -48,3 +48,7 @@ c.Value 的访问，是对当前的上下文的value访问，如果找不到那�
 ```
 源码是通过注册 time.AfterFunc 调用 ctx.cancel 函数执行的
 ```
+
+9. 为什么说context是线程安全的，如何实现的
+
+10. context读取value会有什么问题（时间复杂度讲一下）
