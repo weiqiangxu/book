@@ -11,3 +11,5 @@
 [跟煎鱼学GO](https://eddycjy.gitbook.io/golang/)
 
 [煎鱼博客](https://eddycjy.com/)
+
+[技术文章摘抄](https://learn.lianglianglee.com/)
