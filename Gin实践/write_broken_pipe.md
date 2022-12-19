@@ -16,6 +16,8 @@
 
 [Go 中如何强制关闭 TCP 连接](https://blog.csdn.net/EDDYCJY/article/details/120898217)
 
+[抓包 127.0.0.1 （loopback） 使用 tcpdump+wireshark][https://www.bbsmax.com/A/D854qmj6dE/]
+
 
 1. ulimit -n 连接数过大
 2. 调用者在接收到服务端响应之前断开连接
@@ -51,3 +53,24 @@ CLOSING: 双方同时尝试关闭，等待对方确认
 ### 什么情况下会有非常多的CLOSE_WAIT
 
 ### Gin什么时候会在response之前关闭TCP连接
+
+### 环回地址
+
+### netstat && ping
+
+### mac tcpdump
+```
+sudo tcpdump port 80 -n 
+curl www.baidu.com:80
+```
+
+```
+tcpdump -D 
+
+# 环回地址
+lo0 [Up, Running, Loopback]
+
+sudo tcpdump -i lo0 src host localhost and dst host localhost and src port 9090
+
+curl 127.0.0.1:9090
+```
