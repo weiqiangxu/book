@@ -18,6 +18,8 @@
 
 [抓包 127.0.0.1 （loopback） 使用 tcpdump+wireshark][https://www.bbsmax.com/A/D854qmj6dE/]
 
+[浅谈Close Wait - 写的简单明了](https://huoding.com/2016/01/19/488)
+
 
 1. ulimit -n 连接数过大
 2. 调用者在接收到服务端响应之前断开连接
@@ -33,6 +35,12 @@
 ### 压测计量QPS的时候有很多broken pipe，加大连接数可以提升QPS吗
 
 ### tcpdump工具的使用
+
+### accept 的 backlog是什么
+
+### 如何看本机器是否有很多的Close Wait状态连接
+
+### Close Wait堆积的原因是什么
 
 ### TCP SOCKET 状态表：
 
@@ -74,3 +82,21 @@ sudo tcpdump -i lo0 src host localhost and dst host localhost and src port 9090
 
 curl 127.0.0.1:9090
 ```
+
+### 常用命令
+```
+whereis tcpdump
+ifconfig
+/usr/sbin/tcpdump -i eth0 -n -nn host 10.xx.xx.35
+netstat -an | grep xxxx
+ps -ef | grep xxx
+lsof -p xxx
+ulimit -a
+pmap -x xxx
+cat /proc/$pid/smaps
+strace -p $pid
+pstack $pid
+ls /proc/$pid/fd/  | wc -l
+```
+
+
