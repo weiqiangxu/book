@@ -175,3 +175,14 @@ ls /proc/$pid/fd/  | wc -l
 ```
 netstat -n | awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'
 ```
+
+
+### tcp窗口大小
+
+```
+初始窗口大小为 65，535 字节
+```
+
+[TCP窗口大小](https://learn.microsoft.com/zh-cn/troubleshoot/windows-server/networking/description-tcp-features#tcp-window-size)
+
+[面试官：换人！他连 TCP 这几个参数都不懂](https://mp.weixin.qq.com/s/fjnChU3MKNc_x-Wk7evLhg)
