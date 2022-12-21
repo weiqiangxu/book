@@ -93,10 +93,66 @@ sudo tcpdump -i lo0 src host localhost and dst host localhost and src port 9090 
 
 sudo tcpdump -i lo0 src host localhost and dst host localhost and dst port 9090 -n
 
-sudo tcpdump -i lo0 host localhost and dst port 9090 -n
+sudo tcpdump -i lo0 host localhost and dst port 9292 -n
+
+sudo tcpdump -i lo0 host localhost and src port 9292 -n
 
 curl 127.0.0.1:9090
 ```
+
+### 监听示范
+```
+# src 9292
+
+22:38:22.028257 IP 127.0.0.1.9292 > 127.0.0.1.50139: Flags [S.], seq 2936404470, ack 2399477565, win 65535, options [mss 16344,nop,wscale 6,nop,nop,TS val 2141525572 ecr 2939320578,sackOK,eol], length 0
+22:38:22.028287 IP 127.0.0.1.9292 > 127.0.0.1.50139: Flags [.], ack 1, win 6379, options [nop,nop,TS val 2141525572 ecr 2939320578], length 0
+```
+
+```
+# dst 9292
+
+22:38:22.028149 IP 127.0.0.1.50139 > 127.0.0.1.9292: Flags [S], seq 2399477564, win 65535, options [mss 16344,nop,wscale 6,nop,nop,TS val 2939320578 ecr 0,sackOK,eol], length 0
+22:38:22.028278 IP 127.0.0.1.50139 > 127.0.0.1.9292: Flags [.], ack 2936404471, win 6379, options [nop,nop,TS val 2939320578 ecr 2141525572], length 0
+```
+```
+# 三次握手示范
+
+client   Flags [S],seq 2399477564, win 65535                     [SYN报文] [发完之后clent状态是SYN-SENT]
+server   Flags [S.],seq 2936404470, ack 2399477565, win 65535    [报文发送后server状态是SYN-RCVD]
+client   Flags [.],ack 2936404471, win 6379                      [报文发送后client状态是ESTABLISHED]  [注意这一次的报文可以携带客户端到服务端的数据了]
+                                                                 [服务端收到客户端报文后状态是ESTABLISHED]
+               
+
+# 注意seq值和ack值总是相差1
+# 注意握手成功后双方的状态都是ESTABLISHED
+```
+
+
+### close client
+
+```
+# dst 9292
+
+22:44:13.099483 IP 127.0.0.1.50943 > 127.0.0.1.9292: Flags [F.], seq 0, ack 1, win 6379, options [nop,nop,TS val 1048610910 ecr 2373676954], length 0
+22:44:13.099714 IP 127.0.0.1.50943 > 127.0.0.1.9292: Flags [.], ack 2, win 6379, options [nop,nop,TS val 1048610910 ecr 2373686619], length 0
+```
+
+```
+# src 9292
+
+22:44:13.099535 IP 127.0.0.1.9292 > 127.0.0.1.50943: Flags [.], ack 2, win 6379, options [nop,nop,TS val 2373686619 ecr 1048610910], length 0
+22:44:13.099681 IP 127.0.0.1.9292 > 127.0.0.1.50943: Flags [F.], seq 1, ack 2, win 6379, options [nop,nop,TS val 2373686619 ecr 1048610910], length 0
+```
+
+```
+# 四次挥手
+
+client   Flags [F.], seq 0, ack 1, win 6379
+server   Flags [.], ack 2, win 6379
+server   Flags [F.], seq 1, ack 2, win 6379
+client   Flags [.], ack 2, win 6379
+```
+
 
 ### 常用命令
 ```
