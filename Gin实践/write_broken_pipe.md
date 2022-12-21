@@ -20,6 +20,8 @@
 
 [浅谈Close Wait - 写的简单明了](https://huoding.com/2016/01/19/488)
 
+[Socket图解](https://www.topgoer.com/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/socket%E7%BC%96%E7%A8%8B/socket%E5%9B%BE%E8%A7%A3.html)
+
 
 1. ulimit -n 连接数过大
 2. 调用者在接收到服务端响应之前断开连接
@@ -73,12 +75,25 @@ curl www.baidu.com:80
 ```
 
 ```
+# 显示ip而不是主机名
+-n
+
+# 不列出域名
+-N
+
+# 快速输出仅列出少数的传输协议信息
+-q
+
 tcpdump -D 
 
 # 环回地址
 lo0 [Up, Running, Loopback]
 
-sudo tcpdump -i lo0 src host localhost and dst host localhost and src port 9090
+sudo tcpdump -i lo0 src host localhost and dst host localhost and src port 9090 -n
+
+sudo tcpdump -i lo0 src host localhost and dst host localhost and dst port 9090 -n
+
+sudo tcpdump -i lo0 host localhost and dst port 9090 -n
 
 curl 127.0.0.1:9090
 ```
@@ -100,3 +115,7 @@ ls /proc/$pid/fd/  | wc -l
 ```
 
 
+### 如何查看close wait连接数
+```
+netstat -n | awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'
+```
